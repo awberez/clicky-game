@@ -4,29 +4,37 @@
 
 .btn {
 	margin-bottom: 25px;
-	border: 1px outset rgba(0, 0, 0, 0) !important;
 	font-family: 'Graduate', cursive;
+	opacity: 1.0 !important;
 }
 
 .btn-primary {
-	color: blue;
+	box-shadow: inset #006 0 -1px 9px;
+}
+
+.btn-primary:hover {
+	background-color: #24E0FF !important;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3F8CFF 0 2px 14px !important;
+	transition: .1s ease;
+}
+
+.btn-primary:disabled {
 	background-color: #24E0FF;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #006 0 -1px 9px, #3F8CFF 0 2px 14px;
+	transition: .1s ease;
 }
 
 .btn-danger {
-	color: #720000;
+  	box-shadow: inset #441313 0 -1px 9px;
+}
+
+.btn-danger:hover {
+	background-color: #F00 !important;
+  	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px !important;
+	transition: .2s ease;
+}
+
+.btn-danger:disabled {
 	background-color: #F00;
   	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
-}
-
-.btn:disabled {
-	opacity: 1.0 !important;
-	color: green;
-	background-color: #ABFF00;
-  	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
-}
-
-.btn:disabled:hover {
-	background-color: #ABFF00 !important;
 }

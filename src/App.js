@@ -65,22 +65,20 @@ class App extends Component {
         <div className="row">
           <div className="col-xs-8 col-xs-offset-2">
             <h1 className="text-center">Clicky Game</h1>
-            {!this.state.difficultySet 
-              ? <Title>Select a Difficulty</Title> 
-              : this.state.gameCards === 8
-                ? <React.Fragment> 
-                    <Title>Score: {this.state.score}/8</Title>
-                    <Title>Top Score: {this.state.topScoreEasy}</Title>
-                  </React.Fragment>
-                : <React.Fragment> 
-                    <Title>Score: {this.state.score}/12</Title>
-                    <Title>Top Score: {this.state.topScoreHard}</Title>
-                  </React.Fragment>
-            }
             <GameChoice 
               chooseDifficulty={this.chooseDifficulty}
               gameCards={this.state.gameCards}
             />
+            {!this.state.difficultySet 
+              ? <Title>Select a Difficulty</Title> 
+              : this.state.gameCards === 8
+                ? <React.Fragment> 
+                    <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreEasy}</Title>
+                  </React.Fragment>
+                : <React.Fragment> 
+                    <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreHard}</Title>
+                  </React.Fragment>
+            }
             {this.state.cards.map(card => (
               <GameCard
                 selectCard={this.selectCard}
