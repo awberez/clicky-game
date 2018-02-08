@@ -72,12 +72,8 @@ class App extends Component {
             {!this.state.difficultySet 
               ? <Title>Select a Difficulty</Title> 
               : this.state.gameCards === 8
-                ? <React.Fragment> 
-                    <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreEasy}</Title>
-                  </React.Fragment>
-                : <React.Fragment> 
-                    <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreHard}</Title>
-                  </React.Fragment>
+                ? <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreEasy}</Title>
+                : <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreHard}</Title>
             }
             {this.state.cards.map(card => (
               <GameCard
