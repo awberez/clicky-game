@@ -1,0 +1,18 @@
+body {
+  color: black;
+  background-image: url(./images/metal-texture.jpg);
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+h1 {
+	font-family: 'Special Elite', cursive;
+}
+
+h3 {
+	font-family: 'Special Elite', cursive;
+}
