@@ -1,54 +1,50 @@
 import React, { Component } from "react";
 import GameCard from "./components/GameCard";
 import GameChoice from "./components/GameChoice";
-import Title from "./components/Title";
+import Score from "./components/Score";
+import easyColors from "./easyColors.json";
 import "./App.css";
 
 class App extends Component {
   state = {
     cards: [],
+    easy: easyColors.length,
+    hard: easyColors.length + 4,
     topScoreEasy: 0,
     topScoreHard: 0,
   }
 
-  chooseDifficulty = (cardNum) => {
-    this.setState({ gameCards: cardNum, difficultySet: true }, () => { this.cardMaker(); });
+  chooseDifficulty = (totalCards) => {
+    this.setState({ totalCards }, () => { this.cardMaker(); });
   }
 
   cardMaker = () => {
     this.setState({ cards: [], score: 0 }, () => {
-      let cardArr = [], colorArr = [], easyColors = ["#ff0000", "#0000ff", "#ffff00", "#ffffff", "#00ff00", "#FFA500", "#cc00ff", "#424242"];
-      for (let i=0; i < this.state.gameCards; i++) {
-        let color = this.state.gameCards === 8 ? easyColors[i] : this.randomColor(colorArr),
+      let cards = [];
+      for (let i=0; i < this.state.totalCards; i++) {
+        let color = this.state.totalCards === this.state.easy ? easyColors[i] : this.randomColor(cards),
         card = { "id": i, "color": color, "clicked": false };
-        colorArr.push(card.color);
-        cardArr.push(card);
+        cards.push(card);
       }
-      this.setState({ cards: cardArr });
+      this.setState({ cards });
     });
   }
 
-  randomColor = (colorArr) => {
+  randomColor = (cards) => {
     let newColor = "#000000".replace(/0/g, () => { return(~~(Math.random()*16)).toString(16); });
-    if (colorArr.includes(newColor)) this.randomColor(colorArr);
-    return newColor;
+    return cards.find( card => { return card.color === newColor; }) ? this.randomColor(cards) : newColor;
   }
 
   selectCard = id => {
-    let cards = this.arrRandomize(this.state.cards), score = this.state.score;
-    cards.forEach( element => {
-      if (element.id === id && element.clicked === false) {
-        element.clicked = true;
-        score++;
-      }
-      else if (element.id === id && element.clicked === true) score = 0;
-    });
-    if (this.state.gameCards === 8 && this.state.topScoreEasy < score) this.setState({ topScoreEasy: score });
-    if (this.state.gameCards != 8 && this.state.topScoreHard < score) this.setState({ topScoreHard: score });
-    score === 0 
-      ? (alert("You Lose!"), this.cardMaker()) 
-      : score === this.state.gameCards 
-        ? (alert("You Win!"), this.cardMaker()) 
+    let cards = this.arrRandomize(this.state.cards), score = this.state.score, topScoreEasy = this.state.topScoreEasy, topScoreHard = this.state.topScoreHard;
+    cards.forEach( card => { if (card.id === id) card.clicked === false ? (card.clicked = true, score++) : score = 0; });
+    this.state.totalCards === this.state.easy 
+      ? this.setState({ topScoreEasy: (topScoreEasy < score) ? score : topScoreEasy }) 
+      : this.setState({ topScoreHard: (topScoreHard < score) ? score : topScoreHard });
+    this.state.totalCards === score 
+      ? (alert("You Win!"), this.cardMaker()) 
+      : score === 0 
+        ? (alert("You Lose!"), this.cardMaker()) 
         : this.setState({ cards, score });
   }
 
@@ -61,28 +57,38 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid text-center">
         <div className="row">
           <div className="col-xs-8 col-xs-offset-2">
-            <h1 className="text-center">Clicky Game</h1>
+            <h1>Clicky Game</h1>
             <GameChoice 
               chooseDifficulty={this.chooseDifficulty}
-              gameCards={this.state.gameCards}
+              totalCards={this.state.totalCards}
+              easy={this.state.easy}
+              hard={this.state.hard}
             />
-            {!this.state.difficultySet 
-              ? <Title>Select a Difficulty</Title> 
-              : this.state.gameCards === 8
-                ? <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreEasy}</Title>
-                : <Title>Your Score: {this.state.score} | Best Score: {this.state.topScoreHard}</Title>
+            {!this.state.totalCards 
+              ? <h3>Select a Difficulty</h3> 
+              : this.state.totalCards === this.state.easy
+                ? <Score
+                    score={this.state.score}
+                    topScore={this.state.topScoreEasy}
+                  />
+                : <Score
+                    score={this.state.score}
+                    topScore={this.state.topScoreHard}
+                  />
             }
-            {this.state.cards.map(card => (
-              <GameCard
-                selectCard={this.selectCard}
-                id={card.id}
-                key={card.id}
-                color={card.color}
-              />
-            ))}
+            <div className="row">
+              {this.state.cards.map(card => (
+                <GameCard
+                  selectCard={this.selectCard}
+                  id={card.id}
+                  key={card.id}
+                  color={card.color}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

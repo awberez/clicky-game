@@ -6,15 +6,15 @@ const GameChoice = props => (
 		<div className="btn-group" role="group" aria-label="...">
 			<button 
 				className="btn btn-primary btn-lg" 
-				disabled={props.gameCards === 8 ? 'disabled' : ''} 
-				onClick={()=>{props.chooseDifficulty(8)}}
+				disabled={props.totalCards === props.easy ? 'disabled' : ''} 
+				onClick={()=>{props.chooseDifficulty(props.easy)}}
 			>
 			EASY
 			</button>
 			<button 
 				className="btn btn-danger btn-lg" 
-				disabled={props.gameCards === 12 ? 'disabled' : ''} 
-				onClick={()=>{props.chooseDifficulty(12)}}
+				disabled={props.totalCards === props.hard ? 'disabled' : ''} 
+				onClick={()=>{props.chooseDifficulty(props.hard)}}
 			>
 			HARD
 			</button>
