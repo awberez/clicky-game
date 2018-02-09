@@ -1,9 +1,13 @@
+.btn-group {
+	border: 3px inset;
+	border-radius: 9px;
+}
+
 .btn:focus { 
 	outline: none !important; 
 }
 
 .btn {
-	margin-bottom: 10px;
 	font-family: 'Graduate', cursive;
 	opacity: 1.0 !important;
 }
