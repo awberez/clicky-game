@@ -19,7 +19,7 @@ class App extends Component {
   cardMaker = () => {
     this.setState({ cards: [], score: 0 }, () => {
       let cards = [];
-      for (let i=0; i < this.state.totalCards; i++) {
+      for (let i = 0; i < this.state.totalCards; i++) {
         let color = this.state.totalCards === this.state.easy ? easyColors[i] : this.randomColor(cards),
         card = { "id": i, "color": color, "alreadyClicked": false };
         cards.push(card);
@@ -37,8 +37,8 @@ class App extends Component {
     let cards = this.arrRandomize(this.state.cards), score = this.state.score, topScoreEasy = this.state.topScoreEasy, topScoreHard = this.state.topScoreHard;
     cards.forEach( card => { 
       if (card.id === id) card.alreadyClicked 
-        ? (score = 0, this.setState({ incorrect: true, }, () => { setTimeout(() => { this.setState({ incorrect: false }); }, 300)}))
-        : (card.alreadyClicked = true, score++, this.setState({ correct: true, }, () => { setTimeout(() => { this.setState({ correct: false }); }, 300)})) 
+        ? (score = 0, this.setState({ incorrect: true }, () => { setTimeout(() => { this.setState({ incorrect: false }); }, 300)}))
+        : (card.alreadyClicked = true, score++, this.setState({ correct: true }, () => { setTimeout(() => { this.setState({ correct: false }); }, 300)})) 
     });
     this.state.totalCards === this.state.easy 
       ? this.setState({ topScoreEasy: topScoreEasy < score ? score : topScoreEasy }) 
