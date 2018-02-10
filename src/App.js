@@ -14,18 +14,16 @@ class App extends Component {
     topScoreHard: 0,
   }
 
-  chooseDifficulty = totalCards => { this.setState({ totalCards }, () => { this.cardMaker(); }); }
+  chooseDifficulty = totalCards => { this.setState({ totalCards, score: 0 }, () => { this.setState({ cards: this.cardMaker() }); }); }
 
   cardMaker = () => {
-    this.setState({ cards: [], score: 0 }, () => {
-      let cards = [];
-      for (let i = 0; i < this.state.totalCards; i++) {
-        let color = this.state.totalCards === this.state.easy ? easyColors[i] : this.randomColor(cards),
-        card = { "id": i, "color": color, "alreadyClicked": false };
-        cards.push(card);
-      }
-      this.setState({ cards });
-    });
+    let cards = [];
+    for (let i = 0; i < this.state.totalCards; i++) {
+      let color = this.state.totalCards === this.state.easy ? easyColors[i] : this.randomColor(cards),
+      card = { "id": i, "color": color, "alreadyClicked": false };
+      cards.push(card);
+    }
+    return cards;
   }
 
   randomColor = cards => {
@@ -34,16 +32,15 @@ class App extends Component {
   }
 
   selectCard = id => {
-    let cards = this.arrRandomize(this.state.cards), score = this.state.score, topScoreEasy = this.state.topScoreEasy, topScoreHard = this.state.topScoreHard;
-    cards.forEach( card => { 
-      if (card.id === id) card.alreadyClicked 
-        ? (score = 0, this.setState({ incorrect: true }, () => { setTimeout(() => { this.setState({ incorrect: false }); }, 300)}))
-        : (card.alreadyClicked = true, score++, this.setState({ correct: true }, () => { setTimeout(() => { this.setState({ correct: false }); }, 300)})) 
-    });
-    this.state.totalCards === this.state.easy 
-      ? this.setState({ topScoreEasy: topScoreEasy < score ? score : topScoreEasy }) 
-      : this.setState({ topScoreHard: topScoreHard < score ? score : topScoreHard });
-    score === this.state.totalCards || score === 0 ? this.cardMaker() : this.setState({ cards, score });
+    let cards = this.arrRandomize(this.state.cards), score = this.state.score, isCorrect,
+    topScore = this.state.totalCards === this.state.easy ? { name: 'topScoreEasy', val: this.state.topScoreEasy } : { name: 'topScoreHard', val: this.state.topScoreHard };
+    cards.forEach( card => { if (card.id === id) card.alreadyClicked ? (score = 0, isCorrect = false) : (score++, card.alreadyClicked = true, isCorrect = true) });
+    this.setState({
+      score, 
+      cards: score === this.state.totalCards || score === 0 ? this.cardMaker() : cards,
+      [topScore.name]: topScore.val < score ? score : topScore.val, 
+      [isCorrect ? 'correct' : 'incorrect']: true 
+    }, () => { setTimeout(() => { this.setState({ [isCorrect ? 'correct' : 'incorrect']: false }); }, 300)});
   }
 
   arrRandomize = arr => {
