@@ -1,3 +1,20 @@
 h3 {
   margin: 15px 0px 20px 0px !important;
 }
+
+.correct {
+	color: #ABFF00;
+	text-shadow: -2px 0 #000000, 0 2px #000000, 2px 0 #000000, 0 -2px #000000;
+	transition: .15s ease;
+}
+
+.incorrect {
+	color: #FF0000;	
+	text-shadow: -2px 0 #000000, 0 2px #000000, 2px 0 #000000, 0 -2px #000000;
+	transition: .15s ease;
+}
+
+.default {
+	font-weight: bold;
+	transition: .15s ease;
+}

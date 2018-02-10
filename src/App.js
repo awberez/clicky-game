@@ -14,9 +14,7 @@ class App extends Component {
     topScoreHard: 0,
   }
 
-  chooseDifficulty = (totalCards) => {
-    this.setState({ totalCards }, () => { this.cardMaker(); });
-  }
+  chooseDifficulty = totalCards => { this.setState({ totalCards }, () => { this.cardMaker(); }); }
 
   cardMaker = () => {
     this.setState({ cards: [], score: 0 }, () => {
@@ -30,22 +28,22 @@ class App extends Component {
     });
   }
 
-  randomColor = (cards) => {
+  randomColor = cards => {
     let newColor = "#000000".replace(/0/g, () => { return(~~(Math.random()*16)).toString(16); });
     return cards.find( card => { return card.color === newColor; }) ? this.randomColor(cards) : newColor;
   }
 
   selectCard = id => {
     let cards = this.arrRandomize(this.state.cards), score = this.state.score, topScoreEasy = this.state.topScoreEasy, topScoreHard = this.state.topScoreHard;
-    cards.forEach( card => { if (card.id === id) card.alreadyClicked ? score = 0 : (card.alreadyClicked = true, score++) });
+    cards.forEach( card => { 
+      if (card.id === id) card.alreadyClicked 
+        ? (score = 0, this.setState({ incorrect: true, }, () => { setTimeout(() => { this.setState({ incorrect: false }); }, 300)}))
+        : (card.alreadyClicked = true, score++, this.setState({ correct: true, }, () => { setTimeout(() => { this.setState({ correct: false }); }, 300)})) 
+    });
     this.state.totalCards === this.state.easy 
-      ? this.setState({ topScoreEasy: (topScoreEasy < score) ? score : topScoreEasy }) 
-      : this.setState({ topScoreHard: (topScoreHard < score) ? score : topScoreHard });
-    this.state.totalCards === score 
-      ? (alert("You Win!"), this.cardMaker()) 
-      : score === 0 
-        ? (alert("You Lose!"), this.cardMaker()) 
-        : this.setState({ cards, score });
+      ? this.setState({ topScoreEasy: topScoreEasy < score ? score : topScoreEasy }) 
+      : this.setState({ topScoreHard: topScoreHard < score ? score : topScoreHard });
+    score === (this.state.totalCards || 0) ? this.cardMaker() : this.setState({ cards, score });
   }
 
   arrRandomize = arr => {
@@ -73,10 +71,14 @@ class App extends Component {
                 ? <Score
                     score={this.state.score}
                     topScore={this.state.topScoreEasy}
+                    correct={this.state.correct}
+                    incorrect={this.state.incorrect}
                   />
                 : <Score
                     score={this.state.score}
                     topScore={this.state.topScoreHard}
+                    correct={this.state.correct}
+                    incorrect={this.state.incorrect}
                   />
             }
             <div className="row">
