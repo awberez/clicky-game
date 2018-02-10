@@ -58,7 +58,8 @@ class App extends Component {
       <div className="container-fluid text-center">
         <div className="row">
           <div className="col-xs-8 col-xs-offset-2">
-            <h1>Clicky Game</h1>
+            <h1>MEMORY GAME</h1>
+            <h3>Don't click the same color twice!</h3> 
             <GameChoice 
               chooseDifficulty={this.chooseDifficulty}
               totalCards={this.state.totalCards}
@@ -66,7 +67,7 @@ class App extends Component {
               hard={this.state.hard}
             />
             {!this.state.totalCards 
-              ? <h3>Select a Difficulty</h3> 
+              ? <h4>(Select a Difficulty)</h4> 
               : this.state.totalCards === this.state.easy
                 ? <Score
                     score={this.state.score}

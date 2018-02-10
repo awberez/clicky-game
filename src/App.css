@@ -9,10 +9,10 @@ body {
   margin-bottom: 50px;
 }
 
-h1 {
+h1, h3, h4 {
 	font-family: 'Special Elite', cursive;
 }
 
 h3 {
-	font-family: 'Special Elite', cursive;
+	margin: -5px auto 10px auto;
 }
