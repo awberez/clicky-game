@@ -43,7 +43,7 @@ class App extends Component {
     this.state.totalCards === this.state.easy 
       ? this.setState({ topScoreEasy: topScoreEasy < score ? score : topScoreEasy }) 
       : this.setState({ topScoreHard: topScoreHard < score ? score : topScoreHard });
-    score === (this.state.totalCards || 0) ? this.cardMaker() : this.setState({ cards, score });
+    score === this.state.totalCards || score === 0 ? this.cardMaker() : this.setState({ cards, score });
   }
 
   arrRandomize = arr => {
