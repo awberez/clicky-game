@@ -4,9 +4,9 @@
 }
 
 .btn {
+	width: 90px;
 	font-family: 'Graduate', cursive;
 	opacity: 1.0 !important;
-	width: 90px;
 }
 
 .btn:focus { 
