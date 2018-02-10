@@ -68,19 +68,12 @@ class App extends Component {
             />
             {!this.state.totalCards 
               ? <h4>(Select a Difficulty)</h4> 
-              : this.state.totalCards === this.state.easy
-                ? <Score
-                    score={this.state.score}
-                    topScore={this.state.topScoreEasy}
-                    correct={this.state.correct}
-                    incorrect={this.state.incorrect}
-                  />
-                : <Score
-                    score={this.state.score}
-                    topScore={this.state.topScoreHard}
-                    correct={this.state.correct}
-                    incorrect={this.state.incorrect}
-                  />
+              : <Score
+                  score={this.state.score}
+                  topScore={this.state.totalCards === this.state.easy ? this.state.topScoreEasy : this.state.topScoreHard}
+                  correct={this.state.correct}
+                  incorrect={this.state.incorrect}
+                />
             }
             <div className="row">
               {this.state.cards.map(card => (
