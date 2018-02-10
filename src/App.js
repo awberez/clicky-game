@@ -32,15 +32,15 @@ class App extends Component {
   }
 
   selectCard = id => {
-    let cards = this.arrRandomize(this.state.cards), score = this.state.score, isCorrect,
+    let cards = this.arrRandomize(this.state.cards), score = this.state.score, guessMade,
     topScore = this.state.totalCards === this.state.easy ? { name: 'topScoreEasy', val: this.state.topScoreEasy } : { name: 'topScoreHard', val: this.state.topScoreHard };
-    cards.forEach( card => { if (card.id === id) card.alreadyClicked ? (score = 0, isCorrect = false) : (score++, card.alreadyClicked = true, isCorrect = true) });
+    cards.forEach( card => { if (card.id === id) card.alreadyClicked ? (score = 0, guessMade = 'incorrect') : (score++, guessMade = 'correct', card.alreadyClicked = true) });
     this.setState({
       score, 
       cards: score === this.state.totalCards || score === 0 ? this.cardMaker() : cards,
       [topScore.name]: topScore.val < score ? score : topScore.val, 
-      [isCorrect ? 'correct' : 'incorrect']: true 
-    }, () => { setTimeout(() => { this.setState({ [isCorrect ? 'correct' : 'incorrect']: false }); }, 300)});
+      [guessMade]: true 
+    }, () => { setTimeout(() => { this.setState({ [guessMade]: false }); }, 300)});
   }
 
   arrRandomize = arr => {
