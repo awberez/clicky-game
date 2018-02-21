@@ -18,6 +18,7 @@ const GameChoice = props => (
 			>
 			HARD
 			</button>
+			<div>
 		</div>
   	</div>
 );
